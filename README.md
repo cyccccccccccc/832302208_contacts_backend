@@ -41,7 +41,7 @@
 
 ### 依赖安装
 bash
-pip install flask flask-sqlalchemy flask-cors
+pip install flask flask-sqlalchemy flask-cors flask-migrate
 
 ## 部署说明
 ### 开发环境
@@ -49,9 +49,16 @@ bash
 python app.py
 
 ### 生产环境
-建议使用Gunicorn或uWSGI部署：
+使用Gunicorn部署：
 bash
-gunicorn -w 4 -b 0.0.0.0:5000 app:app
+# 安装gunicorn
+pip install gunicorn
+
+# 启动服务（在项目src目录下）
+gunicorn -w 4 -b 0.0.0.0:5000 app:app --daemon
+
+# 或者使用nohup保持后台运行
+nohup gunicorn -w 4 -b 0.0.0.0:5000 app:app > app.log 2>&1 &
 
 ## 数据库配置
-默认使用SQLite，数据库文件自动创建于项目根目录。
+使用SQLite，数据库文件自动创建于项目根目录。
